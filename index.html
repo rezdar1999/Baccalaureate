@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>Rezdar - حساب معدل البكالوريا العلمي</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #1a202c, #2d3748);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .container {
+      background: rgba(45, 55, 72, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      max-width: 800px;
+      width: 100%;
+      padding: 2rem;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(to right, #4f46e5, #9333ea);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      background: #2d3748;
+      color: white;
+      border: 1px solid #4a5568;
+      transition: all 0.3s ease;
+    }
+
+    input[type="number"]:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      background: linear-gradient(to right, #4f46e5, #9333ea);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.03);
+    }
+
+    .results {
+      margin-top: 2rem;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .result-box {
+      background: #1f2937;
+      border: 1px solid #374151;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .result-box h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #6ee7b7;
+    }
+
+    .subtext {
+      font-size: 0.85rem;
+      color: #9ca3af;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #718096;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Rezdar - حساب معدل البكالوريا العلمي</h1>
+  <form id="gradeForm">
+    <div>
+      <label for="math">الرياضيات</label>
+      <input type="number" id="math" name="math" min="0" max="100" step="0.01" placeholder="مثال: 90">
+    </div>
+    <div>
+      <label for="physics">الفيزياء</label>
+      <input type="number" id="physics" name="physics" min="0" max="100" step="0.01" placeholder="مثال: 90">
+    </div>
+    <div>
+      <label for="chemistry">الكيمياء</label>
+      <input type="number" id="chemistry" name="chemistry" min="0" max="100" step="0.01" placeholder="مثال: 90">
+    </div>
+    <div>
+      <label for="biology">الأحياء</label>
+      <input type="number" id="biology" name="biology" min="0" max="100" step="0.01" placeholder="مثال: 90">
+    </div>
+    <div>
+      <label for="english">الإنجليزي</label>
+      <input type="number" id="english" name="english" min="0" max="100" step="0.01" placeholder="مثال: 90">
+    </div>
+    <div>
+      <label for="kurdish">الكوردي</label>
+      <input type="number" id="kurdish" name="kurdish" min="0" max="100" step="0.01" placeholder="مثال: 90">
+    </div>
+    <div>
+      <label for="arabicReligion">العربي مع الإسلامية</label>
+      <input type="number" id="arabicReligion" name="arabicReligion" min="0" max="100" step="0.01" placeholder="مثال: 90">
+    </div>
+    <div>
+      <label for="grade10">صف العاشر</label>
+      <input type="number" id="grade10" name="grade10" min="0" max="100" step="0.01" placeholder="مثال: 90">
+    </div>
+    <div>
+      <label for="grade11">صف الحادي عشر</label>
+      <input type="number" id="grade11" name="grade11" min="0" max="100" step="0.01" placeholder="مثال: 90">
+    </div>
+  </form>
+
+  <button onclick="calculate()">احسب المعدلات</button>
+
+  <div class="results" id="results" style="display:none;">
+    <h2 style="text-align:center;">نتائج الحساب</h2>
+
+    <div class="result-box">
+      <h3>معدل الكليات الطب و كليات الهندسة و كلية العلوم اقسام (البيولوجي و الكيمياء و الكمبيوتر)</h3>
+      <p class="value" id="chosenRate">-</p>
+      <p class="subtext"> </p>
+    </div>
+
+    <div class="result-box">
+      <h3>المعدل العام</h3>
+      <p class="value" id="generalFinalRate">-</p>
+      <p class="subtext"> </p>
+    </div>
+  </div>
+
+  <footer>
+    <p>تم تصميم الموقع بواسطة ريزدار شيخموس © 2025</p>
+  </footer>
+</div>
+
+<script>
+  function calculate() {
+    const math = parseFloat(document.getElementById('math').value) || 0;
+    const physics = parseFloat(document.getElementById('physics').value) || 0;
+    const chemistry = parseFloat(document.getElementById('chemistry').value) || 0;
+    const biology = parseFloat(document.getElementById('biology').value) || 0;
+    const english = parseFloat(document.getElementById('english').value) || 0;
+    const kurdish = parseFloat(document.getElementById('kurdish').value) || 0;
+    const arabicReligion = parseFloat(document.getElementById('arabicReligion').value) || 0;
+    const grade10 = parseFloat(document.getElementById('grade10').value) || 0;
+    const grade11 = parseFloat(document.getElementById('grade11').value) || 0;
+
+    // Weights per subject
+    const weights = {
+      math: 6,
+      physics: 4,
+      chemistry: 4,
+      biology: 4,
+      english: 5,
+      kurdish: 4,
+      arabicReligion: 5
+    };
+
+    function standardAverage(obj) {
+      const values = Object.values(obj);
+      return values.reduce((sum, val) => sum + val, 0) / values.length;
+    }
+
+    function weightedAverage(obj, wts) {
+      let totalScore = 0;
+      let totalWeights = 0;
+      for (const key in obj) {
+        totalScore += obj[key] * wts[key];
+        totalWeights += wts[key];
+      }
+      return totalScore / totalWeights;
+    }
+
+    const avgAllSubjects = standardAverage({ math, physics, chemistry, biology, english, kurdish, arabicReligion });
+    const avgWithoutArabicKurdish = standardAverage({ math, physics, chemistry, biology, english });
+    const avgWithoutArabicOnly = standardAverage({ math, physics, chemistry, biology, english, kurdish });
+    const avgWithoutKurdishOnly = standardAverage({ math, physics, chemistry, biology, english, arabicReligion });
+
+    const standardMax = Math.max(avgAllSubjects, avgWithoutArabicKurdish, avgWithoutArabicOnly, avgWithoutKurdishOnly);
+
+    const weightedAllSubjects = weightedAverage({ math, physics, chemistry, biology, english, kurdish, arabicReligion }, weights);
+    const weightedWithoutArabicKurdish = weightedAverage(
+      { math, physics, chemistry, biology, english },
+      { math: 6, physics: 4, chemistry: 4, biology: 4, english: 5 }
+    );
+    const weightedWithoutArabicOnly = weightedAverage(
+      { math, physics, chemistry, biology, english, kurdish },
+      { math: 6, physics: 4, chemistry: 4, biology: 4, english: 5, kurdish: 4 }
+    );
+    const weightedWithoutKurdishOnly = weightedAverage(
+      { math, physics, chemistry, biology, english, arabicReligion },
+      { math: 6, physics: 4, chemistry: 4, biology: 4, english: 5, arabicReligion: 5 }
+    );
+
+    const weightedMax = Math.max(weightedAllSubjects, weightedWithoutArabicKurdish, weightedWithoutArabicOnly, weightedWithoutKurdishOnly);
+    const swedishRate = weightedMax * 0.8 + grade10 * 0.1 + grade11 * 0.1;
+    const chosenRate = Math.max(standardMax, swedishRate);
+
+    const generalStandardRate = standardAverage({ math, physics, chemistry, biology, english, kurdish, arabicReligion });
+    const generalWeightedRate = weightedAverage({ math, physics, chemistry, biology, english, kurdish, arabicReligion }, weights) * 0.8;
+    const generalSwedishRate = generalWeightedRate + grade10 * 0.1 + grade11 * 0.1;
+    const generalFinalRate = Math.max(generalStandardRate, generalSwedishRate);
+
+    document.getElementById("chosenRate").innerText = chosenRate.toFixed(2);
+    document.getElementById("generalFinalRate").innerText = generalFinalRate.toFixed(2);
+    document.getElementById("results").style.display = "block";
+  }
+</script>
+
+</body>
+</html>
